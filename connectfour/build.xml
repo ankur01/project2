@@ -1,0 +1,61 @@
+<project name="javademo" default="package">
+
+<!--
+
+Pre-checks : a. Delete the previous build files.
+			 b. Create a separate structure for all the intermediate build files
+			 c. Create all the intermediate directory structures as part of an init target
+			 
+	1. Compile the Java Source Code 
+	2. Create a Jar File
+	3. Copy the web files
+	4. Create the package [ Zip ]
+	
+-->
+
+<target name="clean">
+
+<delete dir="build"/>
+<delete dir="dist"/>
+
+</target>
+<target name="init" depends="clean">
+
+<mkdir dir="build"/>
+<mkdir dir="build/classes"/>
+<mkdir dir="build/jar"/>
+<mkdir dir="dist"/>
+
+</target>
+
+
+<target name="compile" depends="init">
+
+  <javac srcdir="src/java"
+         destdir="build/classes"
+         classpath="lib\junit.jar"
+   />
+
+</target>
+<target name="jar" depends="compile">
+
+	  <jar destfile="build/jar/app-1.0.jar" basedir="build/classes"/>
+
+</target>
+<target name="copyweb">
+	<copy todir="build/web">
+		<fileset dir="src/web"/>
+	</copy>
+
+</target>
+
+<target name="package" depends="jar,copyweb">
+
+	<zip destfile="dist\app-1.0.zip">
+		<fileset dir="build\jar"/>
+		<fileset dir="build\web"/>
+	</zip>
+  
+</target>
+
+</project>
