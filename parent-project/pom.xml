@@ -1,0 +1,140 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.training.multi</groupId>
+	<artifactId>parent-project</artifactId>
+	<version>1.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>sample-weather</module>
+		<module>sample-webapp</module>
+	</modules>
+	<!-- To configure svn -->
+	<scm>
+		<connection>scm:git:https://github.com/ankur01/project2.git/</connection>
+		<developerConnection>scm:git:git@github.com:ankur01/project2.git/</developerConnection>
+		<url>https://github.com/ankur01/project2</url>
+	</scm>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.training.multi</groupId>
+				<artifactId>sample-weather</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+			<!-- Site Plugin Configuration-->
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+			</plugin>
+			<!-- Release plugin configuration-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<tagBase>https://github.com/ankur01/project2</tagBase>
+				</configuration>
+			</plugin>
+		</plugins>
+		<!-- Site Plugin Configuration with dav support-->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+	</build>
+	<distributionManagement>
+		<!-- Site hosting-->
+		<site>
+			<id>nexus-site</id>
+			<url>dav:http://localhost:8081/nexus/content/repositories/Site/</url>
+		</site>
+		<!-- Remote repository for deploy artifacts-->
+		<repository>
+			<id>nexus-repository</id>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
+	<!-- Configure developers for our project-->
+	<developers>
+		<developer>
+			<id>Ankur</id>
+			<name>Ankur Kashyap</name>
+			<email>ankur.sharma01@gmail.com</email>
+			<organization>Zillion</organization>
+			<organizationUrl>N/A</organizationUrl>
+			<roles>
+				<role>lead developer</role>
+			</roles>
+			<timezone>-8</timezone>
+			<url>N/A</url>
+		</developer>
+	</developers>
+	<!-- Continuous integration Configuration -->
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://54.213.5.253:8080/job/BuildAutomation/</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<configuration>
+					<recipients>ankur.sharma01@gmail.com</recipients>
+				</configuration>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>true</sendOnSuccess>
+				<sendOnWarning>true</sendOnWarning>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+	<reporting>
+		<plugins>
+			<!-- Plugin for validate source code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for generating java doc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<links>
+						<link>http://docs.oracle.com/javase/6/docs/api/</link>
+					</links>
+				</configuration>
+			</plugin>
+			<!-- plugin for generating source docs-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for generating junit report-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for code coverage report-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for generating change log report-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for generating graph for scm commits-->
+			<plugin>
+				<groupId>net.sf</groupId>
+				<artifactId>stat-scm</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>
