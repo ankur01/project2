@@ -58,7 +58,7 @@
 		<!-- Remote repository for deploy artifacts-->
 		<repository>
 			<id>nexus-repository</id>
-			<url>http://localhost:8081/nexus/content/repositories/Devopsreleases/</url>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
 		</repository>
 	</distributionManagement>
 	<!-- Configure developers for our project-->
